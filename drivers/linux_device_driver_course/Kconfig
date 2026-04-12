@@ -1,0 +1,16 @@
+menu "Linux Device Driver Course"
+
+menuconfig LINUX_DEVICE_DRIVER_COURSE
+    bool "Linux Device Driver Course (y/n)"
+    default n
+    help
+      Enable linux driver course.
+
+if LINUX_DEVICE_DRIVER_COURSE
+
+config LESSON_01_LINUX_DEVICE_DRIVER
+    tristate "Lesson 01: Hello World"
+    default n
+
+endif
+endmenu
