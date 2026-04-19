@@ -438,6 +438,22 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c1_pins>;
 	clock-frequency = <100000>;
+	status = "okay";
+
+	mcp9808_sensor_1: mcp9808@18 {
+		compatible = "microchip,mcp9808";
+		reg = <0x18>;
+	};
+
+	mcp9808_sensor_2: mcp9808@19 {
+		compatible = "microchip,mcp9808";
+		reg = <0x19>;
+	};
+
+	mcp9808_sensor_3: mcp9808@1a {
+		compatible = "microchip,mcp9808";
+		reg = <0x1a>;
+	};
 };
 
 &i2s {
