@@ -323,21 +323,37 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
 	cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
+	status = "okay";
 
-	spidev0: spidev@0{
-		compatible = "spidev";
-		reg = <0>;	/* CE0 */
-		#address-cells = <1>;
-		#size-cells = <0>;
-		spi-max-frequency = <125000000>;
+	tft_lcd: tft_lcd@0 {
+		compatible = "ilitek,ili9486";
+		reg = <0>;			/* CE0 = GPIO8 */
+		spi-max-frequency = <16000000>;
+		rotate = <90>;
+		fps = <30>;
+		buswidth = <8>;
+		regwidth = <16>;
+		dc-gpios    = <&gpio 24 0>;
+		reset-gpios = <&gpio 25 1>;   /* ACTIVE_LOW: assert=physical LOW=reset */
+		led-gpios   = <&gpio 18 0>;
+		debug = <0>;
 	};
 
-	spidev1: spidev@1{
-		compatible = "spidev";
-		reg = <1>;	/* CE1 */
-		#address-cells = <1>;
-		#size-cells = <0>;
-		spi-max-frequency = <125000000>;
+	tft_touch: tft_touch@1 {
+		compatible = "ti,ads7846";
+		reg = <1>;			/* CE1 = GPIO7 */
+		spi-max-frequency = <2000000>;
+		interrupt-parent = <&gpio>;
+		interrupts = <17 2>;		/* GPIO17, high-to-low edge */
+		pendown-gpio = <&gpio 17 1>;
+		ti,x-min = /bits/ 16 <200>;
+		ti,y-min = /bits/ 16 <200>;
+		ti,x-max = /bits/ 16 <3900>;
+		ti,y-max = /bits/ 16 <3900>;
+		ti,pressure-min = /bits/ 16 <0>;
+		ti,pressure-max = /bits/ 16 <255>;
+		ti,x-plate-ohms = /bits/ 16 <60>;
+		touchscreen-swapped-x-y;
 	};
 };
 
